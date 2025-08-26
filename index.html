@@ -252,9 +252,15 @@
             color: rgba(255, 255, 255, 0.9) !important;
         }
 
-        /* Override for transparent image containers */
+        /* Override for transparent image containers - complete transparency */
         .mdu-widget .transparent-bg .comparison > div {
             background: transparent !important;
+        }
+
+        .mdu-widget .transparent-bg .comparison img {
+            background: transparent !important;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
         }
 
         .mdu-widget .comparison-item.old {
@@ -444,18 +450,14 @@
                 </div>
 
                 <div class="mini-visual transparent-bg">
-                    <div class="comparison">
-                        <div style="padding: 15px; background: transparent; border: 1px solid rgba(0, 255, 255, 0.5); border-radius: 10px;">
-                            <span class="comparison-label" style="color: #00ffff !important;">SeaStar Node</span>
-                            <div style="margin: 15px 0; background: transparent;">
-                                <img src="https://i.imgur.com/X6GIVYv.jpeg" alt="SeaStar Node" style="width: 160px; height: auto; max-height: 160px; object-fit: contain; background: transparent;">
-                            </div>
+                    <div class="comparison" style="background: transparent;">
+                        <div style="padding: 15px; background: #ffffff; border: 1px solid rgba(0, 255, 255, 0.5); border-radius: 10px;">
+                            <span class="comparison-label" style="color: #00ffff !important; display: block; margin-bottom: 10px; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">SeaStar Node</span>
+                            <img src="https://i.imgur.com/X6GIVYv.jpeg" alt="SeaStar Node" style="width: 160px; height: auto; max-height: 160px; object-fit: contain;">
                         </div>
-                        <div style="padding: 15px; background: transparent; border: 1px solid rgba(0, 255, 255, 0.5); border-radius: 10px;">
-                            <span class="comparison-label" style="color: #00ffff !important;">Oyster Node</span>
-                            <div style="margin: 15px 0; background: transparent;">
-                                <img src="https://i.imgur.com/pTzIloH.jpeg" alt="Oyster Node" style="width: 160px; height: auto; max-height: 160px; object-fit: contain; background: transparent;">
-                            </div>
+                        <div style="padding: 15px; background: #ffffff; border: 1px solid rgba(0, 255, 255, 0.5); border-radius: 10px;">
+                            <span class="comparison-label" style="color: #00ffff !important; display: block; margin-bottom: 10px; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">Oyster Node</span>
+                            <img src="https://i.imgur.com/pTzIloH.jpeg" alt="Oyster Node" style="width: 160px; height: auto; max-height: 160px; object-fit: contain;">
                         </div>
                     </div>
                 </div>
@@ -543,19 +545,6 @@
             // Show selected section
             document.getElementById(sectionId).classList.add('active');
         }
-
-        // Check if navigation needs scrolling on mobile
-        function checkNavScroll() {
-            const nav = document.querySelector('.mdu-widget .widget-nav');
-            if (nav && nav.scrollWidth > nav.clientWidth) {
-                // Navigation needs scrolling - add a visual hint
-                nav.style.justifyContent = 'flex-start';
-            }
-        }
-
-        // Run on load and resize
-        window.addEventListener('DOMContentLoaded', checkNavScroll);
-        window.addEventListener('resize', checkNavScroll);
     </script>
 </body>
 </html>
