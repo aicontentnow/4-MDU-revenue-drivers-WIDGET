@@ -72,11 +72,27 @@
         .mdu-widget .widget-nav {
             display: flex;
             justify-content: center;
-            padding: 0;
+            padding: 0 10px;
             background: rgba(0, 0, 0, 0.3);
             border-bottom: 1px solid rgba(168, 85, 247, 0.2);
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0, 255, 255, 0.3) transparent;
+        }
+
+        /* Custom scrollbar for navigation */
+        .mdu-widget .widget-nav::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .mdu-widget .widget-nav::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .mdu-widget .widget-nav::-webkit-scrollbar-thumb {
+            background: rgba(0, 255, 255, 0.3);
+            border-radius: 2px;
         }
 
         .mdu-widget .widget-nav button {
@@ -93,6 +109,7 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
             flex-shrink: 0;
+            min-width: fit-content;
         }
 
         .mdu-widget .widget-nav button:hover,
@@ -220,6 +237,13 @@
             text-align: center;
         }
 
+        /* Special transparent background for image containers */
+        .mdu-widget .mini-visual.transparent-bg {
+            background: transparent;
+            border: none;
+            padding: 0;
+        }
+
         .mdu-widget .comparison {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -232,6 +256,11 @@
             border-radius: 10px;
             font-size: 13px;
             color: rgba(255, 255, 255, 0.9) !important;
+        }
+
+        /* Override for transparent image containers */
+        .mdu-widget .transparent-bg .comparison > div {
+            background: transparent !important;
         }
 
         .mdu-widget .comparison-item.old {
@@ -277,11 +306,15 @@
         @media (max-width: 480px) {
             .mdu-widget .widget-nav {
                 justify-content: flex-start;
+                padding: 0 5px;
+                gap: 5px;
             }
             
             .mdu-widget .widget-nav button {
-                font-size: 12px;
-                padding: 12px 15px;
+                font-size: 11px;
+                padding: 12px 12px;
+                letter-spacing: 0.3px;
+                min-width: auto;
             }
 
             .mdu-widget h2 {
@@ -290,6 +323,19 @@
 
             .mdu-widget .comparison {
                 grid-template-columns: 1fr;
+            }
+
+            /* Stack the product images vertically on mobile */
+            .mdu-widget .transparent-bg .comparison {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            /* Make images smaller on mobile */
+            .mdu-widget .transparent-bg img {
+                width: 120px !important;
+                max-height: 120px !important;
             }
         }
     </style>
@@ -368,18 +414,18 @@
                     </ul>
                 </div>
 
-                <div class="mini-visual">
+                <div class="mini-visual transparent-bg">
                     <div class="comparison">
-                        <div class="comparison-item new" style="background: transparent; border: 1px solid rgba(0, 255, 255, 0.5);">
-                            <span class="comparison-label">SeaStar Node</span>
-                            <div style="margin: 15px 0;">
-                                <img src="https://i.imgur.com/X6GIVYv.jpeg" alt="SeaStar Node" style="width: 160px; height: auto; max-height: 160px; object-fit: contain;">
+                        <div style="padding: 15px; background: transparent; border: 1px solid rgba(0, 255, 255, 0.5); border-radius: 10px;">
+                            <span class="comparison-label" style="color: #00ffff !important;">SeaStar Node</span>
+                            <div style="margin: 15px 0; background: transparent;">
+                                <img src="https://i.imgur.com/X6GIVYv.jpeg" alt="SeaStar Node" style="width: 160px; height: auto; max-height: 160px; object-fit: contain; background: transparent;">
                             </div>
                         </div>
-                        <div class="comparison-item new" style="background: transparent; border: 1px solid rgba(0, 255, 255, 0.5);">
-                            <span class="comparison-label">Oyster Node</span>
-                            <div style="margin: 15px 0;">
-                                <img src="https://i.imgur.com/pTzIloH.jpeg" alt="Oyster Node" style="width: 160px; height: auto; max-height: 160px; object-fit: contain;">
+                        <div style="padding: 15px; background: transparent; border: 1px solid rgba(0, 255, 255, 0.5); border-radius: 10px;">
+                            <span class="comparison-label" style="color: #00ffff !important;">Oyster Node</span>
+                            <div style="margin: 15px 0; background: transparent;">
+                                <img src="https://i.imgur.com/pTzIloH.jpeg" alt="Oyster Node" style="width: 160px; height: auto; max-height: 160px; object-fit: contain; background: transparent;">
                             </div>
                         </div>
                     </div>
@@ -468,6 +514,19 @@
             // Show selected section
             document.getElementById(sectionId).classList.add('active');
         }
+
+        // Check if navigation needs scrolling on mobile
+        function checkNavScroll() {
+            const nav = document.querySelector('.mdu-widget .widget-nav');
+            if (nav && nav.scrollWidth > nav.clientWidth) {
+                // Navigation needs scrolling - add a visual hint
+                nav.style.justifyContent = 'flex-start';
+            }
+        }
+
+        // Run on load and resize
+        window.addEventListener('DOMContentLoaded', checkNavScroll);
+        window.addEventListener('resize', checkNavScroll);
     </script>
 </body>
 </html>
