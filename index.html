@@ -68,31 +68,13 @@
             margin-top: 10px;
         }
 
-        /* Compact Navigation Tabs */
+        /* Compact Navigation Tabs - Desktop */
         .mdu-widget .widget-nav {
             display: flex;
             justify-content: center;
             padding: 0 10px;
             background: rgba(0, 0, 0, 0.3);
             border-bottom: 1px solid rgba(168, 85, 247, 0.2);
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: thin;
-            scrollbar-color: rgba(0, 255, 255, 0.3) transparent;
-        }
-
-        /* Custom scrollbar for navigation */
-        .mdu-widget .widget-nav::-webkit-scrollbar {
-            height: 4px;
-        }
-
-        .mdu-widget .widget-nav::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .mdu-widget .widget-nav::-webkit-scrollbar-thumb {
-            background: rgba(0, 255, 255, 0.3);
-            border-radius: 2px;
         }
 
         .mdu-widget .widget-nav button {
@@ -110,6 +92,14 @@
             letter-spacing: 0.5px;
             flex-shrink: 0;
             min-width: fit-content;
+        }
+
+        .mdu-widget .widget-nav button .mobile-number {
+            display: none;
+        }
+
+        .mdu-widget .widget-nav button .desktop-text {
+            display: inline;
         }
 
         .mdu-widget .widget-nav button:hover,
@@ -237,11 +227,15 @@
             text-align: center;
         }
 
-        /* Special transparent background for image containers */
+        /* Special transparent background for image containers - MUST override everything */
         .mdu-widget .mini-visual.transparent-bg {
-            background: transparent;
-            border: none;
-            padding: 0;
+            background: transparent !important;
+            border: none !important;
+            padding: 0 !important;
+        }
+
+        .mdu-widget .transparent-bg * {
+            background: transparent !important;
         }
 
         .mdu-widget .comparison {
@@ -304,17 +298,40 @@
 
         /* Responsive */
         @media (max-width: 480px) {
+            /* Stack navigation buttons on mobile */
             .mdu-widget .widget-nav {
-                justify-content: flex-start;
-                padding: 0 5px;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 gap: 5px;
+                padding: 10px;
             }
             
             .mdu-widget .widget-nav button {
-                font-size: 11px;
-                padding: 12px 12px;
-                letter-spacing: 0.3px;
+                font-size: 14px;
+                padding: 15px 5px;
+                letter-spacing: 0;
                 min-width: auto;
+                border-bottom: none;
+                border: 1px solid rgba(0, 255, 255, 0.2);
+                border-radius: 8px;
+                background: rgba(0, 0, 0, 0.3);
+            }
+
+            .mdu-widget .widget-nav button.active {
+                background: rgba(0, 255, 255, 0.1);
+                border-color: #00ffff;
+            }
+
+            /* Show numbers, hide text on mobile */
+            .mdu-widget .widget-nav button .mobile-number {
+                display: block;
+                font-size: 20px;
+                font-weight: bold;
+                margin-bottom: 3px;
+            }
+
+            .mdu-widget .widget-nav button .desktop-text {
+                display: none;
             }
 
             .mdu-widget h2 {
@@ -359,10 +376,22 @@
         </div>
 
         <div class="widget-nav">
-            <button class="active" onclick="showSection(this, 'section1')">Use What You Have</button>
-            <button onclick="showSection(this, 'section2')">Deploy at Edge</button>
-            <button onclick="showSection(this, 'section3')">Minimize Disruption</button>
-            <button onclick="showSection(this, 'section4')">Accelerate ROI</button>
+            <button class="active" onclick="showSection(this, 'section1')">
+                <span class="mobile-number">1</span>
+                <span class="desktop-text">Use What You Have</span>
+            </button>
+            <button onclick="showSection(this, 'section2')">
+                <span class="mobile-number">2</span>
+                <span class="desktop-text">Deploy at Edge</span>
+            </button>
+            <button onclick="showSection(this, 'section3')">
+                <span class="mobile-number">3</span>
+                <span class="desktop-text">Minimize Disruption</span>
+            </button>
+            <button onclick="showSection(this, 'section4')">
+                <span class="mobile-number">4</span>
+                <span class="desktop-text">Accelerate ROI</span>
+            </button>
         </div>
 
         <div class="widget-content">
