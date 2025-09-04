@@ -14,23 +14,20 @@
 
         .mdu-widget {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #000;
+            background: linear-gradient(180deg, #000 0%, #0a0015 50%, #1a0033 100%);
             color: #fff !important;
-            border-radius: 20px;
+            border-radius: 25px;
             overflow: hidden;
             position: relative;
             max-width: 100%;
             margin: 30px auto;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.8), 0 0 100px rgba(147, 51, 234, 0.1);
+            border: 1px solid rgba(168, 85, 247, 0.2);
         }
 
-        /* Force all text elements to be white by default */
-        .mdu-widget * {
-            color: inherit;
-        }
-
-        /* Compact Background */
-        .mdu-widget .widget-background {
+        /* Purple gradient background layers */
+        .mdu-widget::before {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
@@ -38,18 +35,52 @@
             height: 100%;
             background: 
                 radial-gradient(circle at 20% 30%, rgba(236, 72, 153, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 60%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
-                linear-gradient(180deg, #000 0%, #0a0015 50%, #1a0033 100%);
-            z-index: -1;
+                radial-gradient(circle at 80% 60%, rgba(0, 255, 255, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
         }
 
-        /* Compact Header */
+        /* Light beams effect */
+        .mdu-widget::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(105deg, transparent 40%, rgba(0, 255, 255, 0.08) 45%, rgba(147, 51, 234, 0.1) 50%, transparent 60%),
+                linear-gradient(75deg, transparent 35%, rgba(236, 72, 153, 0.06) 40%, rgba(168, 85, 247, 0.08) 45%, transparent 55%);
+            animation: beamMove 15s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes beamMove {
+            0%, 100% { opacity: 0.5; transform: translateX(0); }
+            50% { opacity: 1; transform: translateX(20px); }
+        }
+
+        /* Header with glassmorphism */
         .mdu-widget .widget-header {
             padding: 35px 25px 40px;
             text-align: center;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .mdu-widget .widget-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.5), transparent);
         }
 
         .mdu-widget h2 {
@@ -59,6 +90,8 @@
             margin-bottom: 15px;
             text-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
             color: #ffffff !important;
+            position: relative;
+            z-index: 2;
         }
 
         .mdu-widget .subtitle {
@@ -66,32 +99,40 @@
             color: rgba(255, 255, 255, 0.9) !important;
             font-weight: 400;
             margin-top: 10px;
+            position: relative;
+            z-index: 2;
         }
 
-        /* Compact Navigation Tabs - Desktop */
+        /* Navigation with glass effect */
         .mdu-widget .widget-nav {
             display: flex;
             justify-content: center;
-            padding: 0 10px;
-            background: rgba(0, 0, 0, 0.3);
+            gap: 10px;
+            padding: 15px 10px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+            position: relative;
+            z-index: 2;
         }
 
         .mdu-widget .widget-nav button {
-            background: none;
-            border: none;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 255, 0.2);
             color: #00ffff;
-            padding: 15px 20px;
-            font-size: 13px;
+            padding: 12px 24px;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            white-space: nowrap;
-            border-bottom: 2px solid transparent;
+            border-radius: 25px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            flex-shrink: 0;
-            min-width: fit-content;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 2;
         }
 
         .mdu-widget .widget-nav button .mobile-number {
@@ -101,11 +142,13 @@
         .mdu-widget .widget-nav button .desktop-text {
             display: inline;
         }
-
+        
         .mdu-widget .widget-nav button:hover,
         .mdu-widget .widget-nav button.active {
             background: rgba(0, 255, 255, 0.1);
-            border-bottom-color: #00ffff;
+            border-color: #00ffff;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.2);
         }
 
         /* Content Container */
@@ -115,24 +158,7 @@
             max-height: 600px;
             overflow-y: auto;
             position: relative;
-        }
-
-        /* Custom Scrollbar */
-        .mdu-widget .widget-content::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .mdu-widget .widget-content::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .mdu-widget .widget-content::-webkit-scrollbar-thumb {
-            background: rgba(0, 255, 255, 0.3);
-            border-radius: 3px;
-        }
-
-        .mdu-widget .widget-content::-webkit-scrollbar-thumb:hover {
-            background: rgba(0, 255, 255, 0.5);
+            z-index: 1;
         }
 
         /* Section Panels */
@@ -161,7 +187,7 @@
             font-size: 16px;
             font-weight: bold;
             margin-right: 15px;
-            box-shadow: 0 0 15px rgba(236, 72, 153, 0.5);
+            box-shadow: 0 0 20px rgba(236, 72, 153, 0.6);
         }
 
         .mdu-widget h3 {
@@ -180,13 +206,27 @@
             margin-bottom: 20px;
         }
 
-        /* Compact Benefits Box */
+        /* Benefits Box with glassmorphism */
         .mdu-widget .benefits {
             background: rgba(168, 85, 247, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(168, 85, 247, 0.2);
-            border-radius: 15px;
-            padding: 20px;
+            border-radius: 20px;
+            padding: 25px;
             margin: 20px 0;
+            box-shadow: 0 20px 40px rgba(147, 51, 234, 0.1);
+            position: relative;
+        }
+
+        .mdu-widget .benefits::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.5), transparent);
         }
 
         .mdu-widget .benefits h4 {
@@ -217,25 +257,17 @@
             font-weight: bold;
         }
 
-        /* Mini Visuals */
+        /* Mini Visuals with glassmorphism */
         .mdu-widget .mini-visual {
             background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(0, 255, 255, 0.2);
-            border-radius: 15px;
-            padding: 20px;
+            border-radius: 20px;
+            padding: 25px;
             margin: 20px 0;
             text-align: center;
-        }
-
-        /* Special transparent background for image containers - MUST override everything */
-        .mdu-widget .mini-visual.transparent-bg {
-            background: transparent !important;
-            border: none !important;
-            padding: 0 !important;
-        }
-
-        .mdu-widget .transparent-bg * {
-            background: transparent !important;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
         .mdu-widget .comparison {
@@ -246,21 +278,13 @@
 
         .mdu-widget .comparison-item {
             padding: 15px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 15px;
             font-size: 13px;
             color: rgba(255, 255, 255, 0.9) !important;
-        }
-
-        /* Override for transparent image containers - complete transparency */
-        .mdu-widget .transparent-bg .comparison > div {
-            background: transparent !important;
-        }
-
-        .mdu-widget .transparent-bg .comparison img {
-            background: transparent !important;
-            image-rendering: -webkit-optimize-contrast;
-            image-rendering: crisp-edges;
+            transition: all 0.3s ease;
         }
 
         .mdu-widget .comparison-item.old {
@@ -269,6 +293,11 @@
 
         .mdu-widget .comparison-item.new {
             border: 1px solid rgba(0, 255, 255, 0.5);
+        }
+
+        .mdu-widget .comparison-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
         }
 
         .mdu-widget .comparison-label {
@@ -287,28 +316,63 @@
             color: #00ffff !important;
         }
 
-        /* Quote */
+        /* Quote with glassmorphism */
         .mdu-widget .quote {
             background: rgba(168, 85, 247, 0.08);
-            border: none;
-            border-left: 3px solid #ec4899;
-            border-right: 3px solid #ec4899;
-            padding: 20px 30px;
-            margin: 25px 0;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 2px solid rgba(168, 85, 247, 0.3);
+            border-radius: 20px;
+            padding: 35px;
+            margin: 35px 0;
             font-style: italic;
             color: #00ffff !important;
-            font-size: 18px;
+            font-size: 24px;
             text-align: center;
             font-weight: 500;
+            box-shadow: 0 10px 30px rgba(168, 85, 247, 0.2);
+            position: relative;
         }
 
-        /* Responsive */
+        .mdu-widget .quote::before {
+            content: """;
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 60px;
+            opacity: 0.3;
+            color: #ec4899;
+        }
+
+        /* Special handling for product images */
+        .mdu-widget .transparent-bg {
+            background: transparent !important;
+            border: none !important;
+            padding: 0 !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+        }
+
+        /* Scrollbar styling */
+        .mdu-widget .widget-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .mdu-widget .widget-content::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .mdu-widget .widget-content::-webkit-scrollbar-thumb {
+            background: rgba(0, 255, 255, 0.3);
+            border-radius: 3px;
+        }
+
+        /* Mobile Responsive */
         @media (max-width: 480px) {
-            /* Stack navigation buttons on mobile */
             .mdu-widget .widget-nav {
                 display: grid;
                 grid-template-columns: repeat(4, 1fr);
-                gap: 5px;
+                gap: 8px;
                 padding: 10px;
             }
             
@@ -317,18 +381,9 @@
                 padding: 15px 5px;
                 letter-spacing: 0;
                 min-width: auto;
-                border-bottom: none;
-                border: 1px solid rgba(0, 255, 255, 0.2);
-                border-radius: 8px;
-                background: rgba(0, 0, 0, 0.3);
+                border-radius: 15px;
             }
 
-            .mdu-widget .widget-nav button.active {
-                background: rgba(0, 255, 255, 0.1);
-                border-color: #00ffff;
-            }
-
-            /* Show numbers, hide text on mobile */
             .mdu-widget .widget-nav button .mobile-number {
                 display: block;
                 font-size: 20px;
@@ -348,14 +403,12 @@
                 grid-template-columns: 1fr;
             }
 
-            /* Stack the product images vertically on mobile */
             .mdu-widget .transparent-bg .comparison {
                 display: flex;
                 flex-direction: column;
                 gap: 15px;
             }
 
-            /* Make images smaller on mobile */
             .mdu-widget .transparent-bg img {
                 width: 120px !important;
                 max-height: 120px !important;
@@ -374,8 +427,6 @@
     -->
 
     <div class="mdu-widget">
-        <div class="widget-background"></div>
-        
         <div class="widget-header">
             <h2>4 Ways to Turn Brownfield MDUs into Revenue Drivers</h2>
             <div class="subtitle">Transform existing infrastructure into competitive advantage</div>
@@ -388,7 +439,7 @@
             </button>
             <button onclick="showSection(this, 'section2')">
                 <span class="mobile-number">2</span>
-                <span class="desktop-text">Deploy at the Edge</span>
+                <span class="desktop-text">Deploy at Edge</span>
             </button>
             <button onclick="showSection(this, 'section3')">
                 <span class="mobile-number">3</span>
@@ -419,7 +470,7 @@
                     <div class="comparison">
                         <div class="comparison-item old">
                             <span class="comparison-label">New Fiber Build</span>
-                            <div style="font-size: 20px; margin: 10px 0; color: #fff;">$$</div>
+                            <div style="font-size: 20px; margin: 10px 0; color: #fff;">$$$</div>
                             <div style="font-size: 11px; opacity: 0.7; color: rgba(255,255,255,0.7);">High Cost</div>
                         </div>
                         <div class="comparison-item new">
@@ -431,7 +482,7 @@
                 </div>
 
                 <div class="quote">
-                    "Legacy coax isn't a compromise. It's a competitive advantage."
+                    Legacy coax isn't a compromise. It's a competitive advantage.
                 </div>
             </div>
 
@@ -497,7 +548,7 @@
                 </div>
 
                 <div class="quote">
-                    "No damage. No delays. No complaints."
+                    No damage. No delays. No complaints.
                 </div>
             </div>
 
